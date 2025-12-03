@@ -1,71 +1,138 @@
-/* Sidebar */
+/* ===========================
+   SIDEBAR CONTAINER
+   =========================== */
 .sidebar {
   padding: 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(109, 138, 255, 0.02),
-    transparent 40%
-  );
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .sidebar-title {
-  margin: 0 0 6px 0;
+  margin: 0;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
 
 .sidebar-subtitle {
-  margin: 0 0 20px 0;
+  margin: 0;
   color: var(--text-muted);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 12px;
+  line-height: 1.4;
 }
 
 .sidebar-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
-.constraint-row {
-  display: grid;
-  grid-template-columns: 80px 1fr 60px 70px;
-  align-items: center;
-  gap: 12px;
+/* ===========================
+   CONSTRAINT CARD
+   =========================== */
+.constraint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 14px;
   background: linear-gradient(
     135deg,
-    rgba(21, 27, 36, 0.6),
-    rgba(15, 20, 27, 0.4)
+    rgba(21, 27, 36, 0.7),
+    rgba(15, 20, 27, 0.5)
   );
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
+  border-radius: 10px;
   transition: all 0.25s ease;
 }
 
-.constraint-row:hover {
+.constraint-card:hover {
   border-color: var(--border-medium);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   transform: translateY(-1px);
 }
 
+/* Header Section */
+.constraint-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 36px;
+}
+
+.constraint-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
 .constraint-label {
   color: var(--text-primary);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.constraint-stats {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.constraint-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Edit Mode */
+.constraint-edit-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+}
+
+.constraint-name-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(10, 14, 20, 0.95);
+  border: 1px solid var(--accent-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 0 0 3px rgba(109, 138, 255, 0.15);
+  height: 34px;
+}
+
+.constraint-name-input:focus {
+  outline: none;
+}
+
+/* Progress Meter */
 .constraint-meter {
-  background: rgba(10, 14, 20, 0.8);
+  background: rgba(10, 14, 20, 0.9);
   border: 1px solid var(--border-subtle);
   border-radius: 999px;
-  height: 8px;
+  height: 10px;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .constraint-fill {
@@ -73,97 +140,258 @@
   top: 0;
   left: 0;
   bottom: 0;
-  background: linear-gradient(
-    90deg,
-    var(--accent-secondary),
-    var(--accent-primary)
-  );
   border-radius: 999px;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 8px rgba(109, 138, 255, 0.6);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 12px rgba(109, 138, 255, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.constraint-count {
+/* Controls Section */
+.constraint-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.constraint-label-text {
   color: var(--text-muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-.constraint-input {
-  width: 100%;
+.constraint-number-input {
+  width: 70px;
   padding: 8px 10px;
   border-radius: 8px;
-  background: rgba(10, 14, 20, 0.8);
+  background: rgba(10, 14, 20, 0.9);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
   transition: all 0.2s ease;
-  font-variant-numeric: tabular-nums;
 }
 
-.constraint-input:hover {
+.constraint-number-input:hover {
   border-color: var(--border-medium);
+  background: rgba(10, 14, 20, 1);
 }
 
-.constraint-input:focus {
+.constraint-number-input:focus {
   outline: none;
   border-color: var(--accent-primary);
   box-shadow: 0 0 0 3px rgba(109, 138, 255, 0.15);
 }
 
-.badge.over {
-  grid-column: 1 / -1;
+/* Remove number input arrows */
+.constraint-number-input::-webkit-outer-spin-button,
+.constraint-number-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.constraint-number-input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* ===========================
+   ICON BUTTONS
+   =========================== */
+.icon-btn {
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(10, 14, 20, 0.6);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  border-color: var(--border-medium);
+  transform: translateY(-1px);
+}
+
+.icon-btn.edit:hover {
+  background: rgba(109, 138, 255, 0.15);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.icon-btn.delete:hover {
+  background: rgba(255, 107, 122, 0.15);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.icon-btn.save {
+  background: rgba(77, 217, 192, 0.15);
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+}
+
+.icon-btn.save:hover {
+  background: rgba(77, 217, 192, 0.25);
+  box-shadow: 0 0 12px rgba(77, 217, 192, 0.3);
+}
+
+.icon-btn.cancel {
+  background: rgba(255, 107, 122, 0.15);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.icon-btn.cancel:hover {
+  background: rgba(255, 107, 122, 0.25);
+}
+
+/* Larger, clearer buttons when renaming */
+.constraint-edit-row .icon-btn {
+  min-width: 32px;
+  height: 32px;
+}
+
+/* ===========================
+   ADD CONSTRAINT SECTION
+   =========================== */
+.constraint-add {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px;
   background: linear-gradient(
     135deg,
-    rgba(255, 107, 122, 0.15),
-    rgba(255, 107, 122, 0.08)
+    rgba(109, 138, 255, 0.05),
+    rgba(77, 217, 192, 0.03)
   );
-  color: var(--danger);
-  border: 1px solid rgba(255, 107, 122, 0.4);
-  padding: 8px 14px;
+  border: 2px dashed var(--border-medium);
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  margin-top: 4px;
+}
+
+.constraint-add:hover {
+  border-color: var(--accent-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(109, 138, 255, 0.08),
+    rgba(77, 217, 192, 0.05)
+  );
+}
+
+.constraint-add-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 12px;
   border-radius: 8px;
-  font-size: 12px;
+  background: rgba(10, 14, 20, 0.8);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.constraint-add-input::placeholder {
+  color: var(--text-muted);
+}
+
+.constraint-add-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(109, 138, 255, 0.15);
+  background: rgba(10, 14, 20, 1);
+}
+
+.constraint-add-btn {
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #5a73d9, #6d8aff);
+  border: 1px solid var(--accent-primary);
+  color: var(--text-primary);
+  font-size: 14px;
   font-weight: 600;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  animation: pulse-danger 2s ease-in-out infinite;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(109, 138, 255, 0.3);
 }
 
-@keyframes pulse-danger {
-  0%,
-  100% {
-    box-shadow: 0 0 0 rgba(255, 107, 122, 0);
-  }
-  50% {
-    box-shadow: 0 0 12px rgba(255, 107, 122, 0.4);
-  }
+.constraint-add-btn:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(109, 138, 255, 0.4);
+  transform: translateY(-1px);
 }
 
-@media (max-width: 960px) {
+.constraint-add-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.constraint-add-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 1024px) {
   .sidebar {
     padding: 16px;
   }
-}
 
-@media (max-width: 640px) {
-  .constraint-row {
-    grid-template-columns: 70px 1fr 50px 60px;
-    gap: 8px;
+  .sidebar-title {
+    font-size: 15px;
+  }
+
+  .constraint-card {
     padding: 12px;
   }
+}
+
+@media (max-width: 768px) {
+  .constraint-card {
+    padding: 10px;
+  }
+
   .constraint-label {
     font-size: 13px;
   }
-  .constraint-count {
-    font-size: 12px;
+
+  .constraint-stats {
+    font-size: 10px;
   }
-  .constraint-input {
+
+  .constraint-number-input {
+    width: 60px;
     padding: 6px 8px;
     font-size: 13px;
+  }
+
+  .constraint-add {
+    flex-direction: column;
+  }
+
+  .constraint-add-input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .constraint-add-btn {
+    width: 100%;
+  }
+
+  .icon-btn {
+    min-width: 24px;
+    height: 24px;
+    font-size: 12px;
   }
 }

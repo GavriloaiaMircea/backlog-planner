@@ -13,6 +13,12 @@ export interface GamePlanSlot {
   note?: string;
 }
 
+export interface Category {
+  label: string;
+  count: number;
+  color?: string; // Hex color code
+}
+
 export interface MonthConstraintPreset {
   id: string;
   name: string;

@@ -1,12 +1,9 @@
 import "./styles/App.css";
-import "./styles/Hero.css";
-import "./styles/Panel.css";
-import "./styles/Toolbar.css";
 import "./styles/Sidebar.css";
 import "./styles/Grid.css";
+import { Navbar } from "./components/Navbar";
 import { PlannerGrid } from "./components/PlannerGrid";
 import { ConstraintsSidebar } from "./components/ConstraintsSidebar";
-import { MonthSelector } from "./components/MonthSelector";
 import { mockSlots as seedSlots, months } from "./data/mock";
 import { useMemo, useState } from "react";
 import type { GamePlanSlot } from "./types";
@@ -50,12 +47,13 @@ function App() {
     localStorage.setItem("bp.constraints", JSON.stringify(newConstraints));
 
     // Calculate current slot count for this label in the selected month
+    const targetLabel = normalizeSlotLabel(label);
     const monthSlots = slots.filter(
       (s: GamePlanSlot) => s.month === selectedMonth
     );
     const labelSlots = monthSlots.filter((s: GamePlanSlot) => {
       const normalized = normalizeSlotLabel(s.slotType);
-      return normalized === label;
+      return normalized === targetLabel;
     });
 
     const currentCount = labelSlots.length;
@@ -103,42 +101,89 @@ function App() {
     return slotType;
   }
 
+  function handleRenameConstraint(oldLabel: string, newLabel: string) {
+    // Update constraints
+    const newConstraints = constraints.map((c: any) =>
+      c.label === oldLabel ? { ...c, label: newLabel } : c
+    );
+    setConstraints(newConstraints);
+    localStorage.setItem("bp.constraints", JSON.stringify(newConstraints));
+
+    // Update all slots with this label
+    const targetOld = normalizeSlotLabel(oldLabel);
+    const updatedSlots = slots.map((s: GamePlanSlot) => {
+      const normalized = normalizeSlotLabel(s.slotType);
+      if (normalized === targetOld) {
+        // Extract the number from the slotType (e.g., "PC 1" -> "1")
+        const match = s.slotType.match(/\d+$/);
+        const number = match ? ` ${match[0]}` : "";
+        return { ...s, slotType: `${newLabel}${number}` };
+      }
+      return s;
+    });
+    setSlots(updatedSlots);
+    localStorage.setItem("bp.slots", JSON.stringify(updatedSlots));
+  }
+
+  function handleDeleteConstraint(label: string) {
+    // Remove constraint
+    const newConstraints = constraints.filter((c: any) => c.label !== label);
+    setConstraints(newConstraints);
+    localStorage.setItem("bp.constraints", JSON.stringify(newConstraints));
+
+    // Remove all slots with this label from ALL months
+    const targetLabel = normalizeSlotLabel(label);
+    const updatedSlots = slots.filter((s: GamePlanSlot) => {
+      const normalized = normalizeSlotLabel(s.slotType);
+      const keep = normalized !== targetLabel;
+      return keep;
+    });
+    setSlots(updatedSlots);
+    localStorage.setItem("bp.slots", JSON.stringify(updatedSlots));
+  }
+
+  function handleAddConstraint(label: string) {
+    // Check if constraint already exists
+    if (constraints.some((c: any) => c.label === label)) {
+      alert("A constraint with this name already exists!");
+      return;
+    }
+
+    // Add new constraint with 0 slots initially
+    const newConstraints = [...constraints, { label, count: 0 }];
+    setConstraints(newConstraints);
+    localStorage.setItem("bp.constraints", JSON.stringify(newConstraints));
+  }
+
   return (
-    <div>
-      <header className="hero">
-        <h1 className="hero-title">Backlog Planner</h1>
-        <p className="hero-subtitle">
-          Plan months, set realistic slots, and track progress.
-        </p>
-      </header>
+    <div className="app-container">
+      <Navbar
+        months={months}
+        selectedMonth={selectedMonth}
+        onMonthChange={setSelectedMonth}
+      />
 
-      <section className="panel">
-        <div className="panel-layout">
-          <div className="toolbar">
-            <MonthSelector
-              months={months}
-              selected={selectedMonth}
-              onChange={setSelectedMonth}
-            />
-            <div className="spacer" />
-          </div>
-
+      <div className="app-layout">
+        <aside className="app-sidebar">
           <ConstraintsSidebar
             selectedMonth={selectedMonth}
             slots={slots}
             constraints={constraints}
             onUpdateConstraint={handleConstraintChange}
+            onRenameConstraint={handleRenameConstraint}
+            onDeleteConstraint={handleDeleteConstraint}
+            onAddConstraint={handleAddConstraint}
           />
+        </aside>
 
-          <div className="panel-main">
-            <PlannerGrid
-              slots={filteredSlots}
-              months={[selectedMonth]}
-              onChange={handleSlotChange}
-            />
-          </div>
-        </div>
-      </section>
+        <main className="app-main">
+          <PlannerGrid
+            slots={filteredSlots}
+            months={[selectedMonth]}
+            onChange={handleSlotChange}
+          />
+        </main>
+      </div>
     </div>
   );
 }
