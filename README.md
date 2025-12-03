@@ -122,13 +122,3 @@ Environment
 
 - Use DTOs for game listing, plan creation, and status updates
 - JSON-based storage initially; replaceable with EF Core repositories
-
-## Contributing
-
-- Keep changes minimal and focused
-- Follow TypeScript strictness on the frontend and DTO-only responses on the backend
-- Prefer small PRs with clear descriptions
-
-## License
-
-Proprietary. All rights reserved.

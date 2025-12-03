@@ -1,0 +1,63 @@
+/* Enhanced Modern Dark Theme */
+:root {
+  --bg-primary: #0a0e14;
+  --bg-secondary: #0f141b;
+  --bg-tertiary: #151b24;
+  --border-subtle: #1a2332;
+  --border-medium: #253142;
+  --text-primary: #e8eef5;
+  --text-secondary: #9facbd;
+  --text-muted: #6b7c92;
+  --accent-primary: #6d8aff;
+  --accent-secondary: #4dd9c0;
+  --accent-tertiary: #ff7eb6;
+  --danger: #ff6b7a;
+  --success: #50d890;
+  --warning: #ffb54d;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(
+      ellipse 1400px 700px at 90% -10%,
+      rgba(109, 138, 255, 0.08),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 1200px 600px at 10% 100%,
+      rgba(77, 217, 192, 0.06),
+      transparent 50%
+    ),
+    linear-gradient(135deg, #0a0e14 0%, #0d1118 50%, #0a0e14 100%);
+  color: var(--text-primary);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+@media (max-width: 960px) {
+  #root {
+    padding: 24px 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  #root {
+    padding: 20px 12px;
+  }
+}
