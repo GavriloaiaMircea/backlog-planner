@@ -1,0 +1,76 @@
+# ---- Root ----
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# VS Code
+.vscode/
+.code-workspace
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env
+.env
+.env.*
+
+# ---- Node/Frontend ----
+node_modules/
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+frontend/.parcel-cache/
+frontend/.eslintcache
+frontend/coverage/
+
+# Build outputs
+coverage/
+dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# ---- .NET/Backend ----
+backend/bin/
+backend/obj/
+**/bin/
+**/obj/
+
+# NuGet
+# Packages are restored by the build
+**/packages/
+*.nupkg
+*.snupkg
+
+# Rider/VS/Build artifacts
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# EF Migrations (generated)
+backend/Migrations/
+
+# ---- Testing/Temp ----
+.tmp/
+.temp/
+
+# ---- Images/Static cache ----
+frontend/public/.cache/
+
+# ---- Misc ----
+# Ignore local HTTP scratch files
+backend/*.http
